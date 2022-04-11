@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="侧帽君的🛖">
 <meta property="og:description" content="最近参考挪威教授Fossen对海洋运动装备的研究[1]，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，一以此作为我后续研究的对象。 Otter无人艇Otter水面无人艇[2]是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高8">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/blog/public/images/image-20220410154719504.png">
-<meta property="og:image" content="http://example.com/blog/public/images/基于otter无人艇搭建USV3自由度模型/image-20220410172159119.png">
-<meta property="og:image" content="http://example.com/blog/public/images/基于otter无人艇搭建USV3自由度模型/image-20220407211928516.png">
+<meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220410154719504.png">
+<meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220410172159119.png">
+<meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220407211928516.png">
 <meta property="article:published_time" content="2022-04-10T07:07:12.000Z">
-<meta property="article:modified_time" content="2022-04-11T08:39:00.524Z">
+<meta property="article:modified_time" content="2022-04-11T10:37:52.435Z">
 <meta property="article:author" content="Cemaojun">
 <meta property="article:tag" content="模型搭建">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/blog/public/images/image-20220410154719504.png">
+<meta name="twitter:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220410154719504.png">
     
     
         
@@ -181,114 +181,251 @@
 
   <div class="content" itemprop="articleBody">
     <p>最近参考挪威教授Fossen对海洋运动装备的研究<sup>[1]</sup>，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，一以此作为我后续研究的对象。</p>
-<h2 id="Otter无人艇"><a href="#Otter无人艇" class="headerlink" title="Otter无人艇"></a>Otter无人艇</h2><p>Otter水面无人艇<sup>[2]</sup>是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高81.5cm，重量为55kg。船体采用双体设计，配备4块强大且易于更换的电池组，以此具备持久的续航能力。<br><a href="blog/public/images/image-20220410154719504.png"><img src="/blog/public/images/image-20220410154719504.png" alt="1"></a></p>
-<h2 id="模型搭建"><a href="#模型搭建" class="headerlink" title="模型搭建"></a>模型搭建</h2><p>在Fossen教授的书中，Chapter2-8详细地介绍了如何通过构建坐标系和矢量建立海洋装备的运动方程。总体模型可通过（2.1）（2.2）表示。<br>$$<br>\dot{\pmb{\eta}}&#x3D;\pmb{J}_\Theta(\pmb{\eta})\pmb{v}\tag{2.1}<br>$$</p>
-<p>$$<br>\pmb{M}\dot{\pmb{v}}+\pmb{C}(\pmb{v})\pmb{v}+\pmb{D}(\pmb{v})\pmb{v}+\pmb{g}(\pmb{\eta})+\pmb{g}<em>0&#x3D;\pmb{\tau}+\pmb{\tau}</em>{wind}+\pmb{\tau}_{wave}\tag{2.2}<br>$$</p>
-<h3 id="运动学"><a href="#运动学" class="headerlink" title="运动学"></a>运动学</h3><p>船舶运动学建模涉及坐标系的转换。首先定义两个参考系，一个是全局固定参考系{n}，一个是局部载体参考系{b}。船舶的运动分为平动和转动，共计六个自由度，如下图所示。</p>
-<div align=center><img src="/blog/public/images/基于otter无人艇搭建USV3自由度模型/image-20220410172159119.png" alt="image-20220410172159119" style="zoom:40%;" /></div>
+<h2 id="Otter无人艇"><a href="#Otter无人艇" class="headerlink" title="Otter无人艇"></a>Otter无人艇</h2><p>Otter水面无人艇<sup>[2]</sup>是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高81.5cm，重量为55kg。船体采用双体设计，配备4块强大且易于更换的电池组，以此具备持久的续航能力。</p>
+<div align=center><img src="/images/基于otter无人艇搭建USV3自由度模型/image-20220410154719504.png" alt="image-20220410172159119" width=60%/></div>
+
+<h2 id="模型搭建"><a href="#模型搭建" class="headerlink" title="模型搭建"></a>模型搭建</h2><p>在Fossen教授的书中，Chapter2-8详细地介绍了如何通过构建坐标系和矢量建立海洋装备的运动方程。总体模型可通过（2.1）（2.2）表示。</p>
+<script type="math/tex; mode=display">
+\dot{\pmb{\eta}}=\pmb{J}_\Theta(\pmb{\eta})\pmb{v}\tag{2.1}</script><script type="math/tex; mode=display">
+\pmb{M}\dot{\pmb{v}}+\pmb{C}(\pmb{v})\pmb{v}+\pmb{D}(\pmb{v})\pmb{v}+\pmb{g}(\pmb{\eta})+\pmb{g}_0=\pmb{\tau}+\pmb{\tau}_{wind}+\pmb{\tau}_{wave}\tag{2.2}</script><h3 id="运动学"><a href="#运动学" class="headerlink" title="运动学"></a>运动学</h3><p>船舶运动学建模涉及坐标系的转换。首先定义两个参考系，一个是全局固定参考系{n}，一个是局部载体参考系{b}。船舶的运动分为平动和转动，共计六个自由度，如下图所示。</p>
+<div align=center><img src="/images/基于otter无人艇搭建USV3自由度模型/image-20220410172159119.png" alt="image-20220410172159119" width=60% /></div>
 
 <p><strong>符号表</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>DOF</th>
-<th align="center">Forces and moments</th>
-<th align="center">Linear and angular velocities</th>
-<th align="center">Positions and Eular angles</th>
+<th style="text-align:center">Forces and moments</th>
+<th style="text-align:center">Linear and angular velocities</th>
+<th style="text-align:center">Positions and Eular angles</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1 motions in the x direction (surge)</td>
-<td align="center">$X$</td>
-<td align="center">$u$</td>
-<td align="center">$x$</td>
+<td style="text-align:center">$X$</td>
+<td style="text-align:center">$u$</td>
+<td style="text-align:center">$x$</td>
 </tr>
 <tr>
 <td>2 motions in the y direction (sway)</td>
-<td align="center">$Y$</td>
-<td align="center">$v$</td>
-<td align="center">$y$</td>
+<td style="text-align:center">$Y$</td>
+<td style="text-align:center">$v$</td>
+<td style="text-align:center">$y$</td>
 </tr>
 <tr>
 <td>3 motions in the z direction (heave)</td>
-<td align="center">$Z$</td>
-<td align="center">$w$</td>
-<td align="center">$z$</td>
+<td style="text-align:center">$Z$</td>
+<td style="text-align:center">$w$</td>
+<td style="text-align:center">$z$</td>
 </tr>
 <tr>
 <td>4 rotation about the x axis (roll, heel)</td>
-<td align="center">$K$</td>
-<td align="center">$p$</td>
-<td align="center">$\phi$</td>
+<td style="text-align:center">$K$</td>
+<td style="text-align:center">$p$</td>
+<td style="text-align:center">$\phi$</td>
 </tr>
 <tr>
 <td>5 rotation about the y axis (pitch, trim)</td>
-<td align="center">$M$</td>
-<td align="center">$q$</td>
-<td align="center">$\theta$</td>
+<td style="text-align:center">$M$</td>
+<td style="text-align:center">$q$</td>
+<td style="text-align:center">$\theta$</td>
 </tr>
 <tr>
 <td>6 rotation about the z axis (yaw)</td>
-<td align="center">$N$</td>
-<td align="center">$r$</td>
-<td align="center">$\psi$</td>
+<td style="text-align:center">$N$</td>
+<td style="text-align:center">$r$</td>
+<td style="text-align:center">$\psi$</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>坐标变换</strong></p>
-<p>设$R_{\lambda,\beta}$是对应于围绕$\lambda$轴的旋转$\beta$的旋转矩阵，根据欧拉旋转定理(详解)得：<br>$$<br>R_{\lambda,\beta}&#x3D;I_{3\times3}+sin(\beta)S(\lambda)+[1-cos(\beta)]S^2(\lambda)\tag{2.12}<br>$$<br>设$\lambda&#x3D;[1,0,0]^T$，$\lambda&#x3D;[0,1,0]^T$和$\lambda&#x3D;[0,0,1]^T$分别表示x，y和z轴；$\beta&#x3D;\phi$，$\beta&#x3D;\theta$，$\beta&#x3D;\psi$。通过公式（2.12）得到3个主要转换矩阵：</p>
-<p>$$<br>R_{x,\phi}&#x3D;\begin{bmatrix}<br>1&amp;0&amp;0\<br>0&amp;c\phi&amp;-s\phi\<br>0&amp;s\phi&amp;c\phi<br>\end{bmatrix},<br>R_{y,\theta}&#x3D;\begin{bmatrix}<br>c\phi&amp;0&amp;s\phi\<br>0&amp;1&amp;0\<br>-s\phi&amp;0&amp;c\phi<br>\end{bmatrix},\<br>R_{z,\psi}&#x3D;\begin{bmatrix}<br>c\phi&amp;-s\phi&amp;0\</p>
-<p>s\phi&amp;c\phi&amp;0\<br>0&amp;0&amp;1<br>\end{bmatrix}\tag{2.15}<br>$$<br>上式3个转换矩阵满足$S&#x3D;-S^T$*(Skew-Symmetry of a Matrix)*，且满足$SS^T&#x3D;S^TS&#x3D;I$。一般的转换顺序规定为x-y-z，总的转换矩阵为：<br>$$<br>\pmb{R}<em>b^n(\pmb{\Theta}</em>{nb}):&#x3D;\pmb{R}<em>{z,\psi}\pmb{R}</em>{y,\theta}\pmb{R}_{x,\phi}\tag{2.16}<br>$$</p>
-<p>$$<br>\pmb{R}<em>b^n(\pmb{\Theta}</em>{nb})&#x3D;\begin{bmatrix}<br>c\psi c\theta&amp;-s\psi c\phi+c\psi s\theta s\phi&amp;s\psi s\phi+c\psi c\phi s\theta\<br>s\psi c\theta&amp;c\psi c\phi+s\phi s\theta s\psi&amp;-s\psi s\phi+s\theta s\psi c\phi\<br>-s\theta&amp;c\theta s\phi&amp;c\theta c\phi<br>\end{bmatrix}\tag{2.18}<br>$$</p>
-<p><strong>线速度转换</strong></p>
-<p>设USV在固定坐标系下的状态为$\pmb{p}<em>{b&#x2F;n}^n&#x3D;[x,y,z]^T$，在载体坐标系下的线速度为$\pmb{v}</em>{b&#x2F;n}^b&#x3D;[u,v,w]^T$，则：</p>
-<p>$$<br>\dot{\pmb{p}}<em>{b&#x2F;n}^n&#x3D;\pmb{R}<em>b^n(\pmb{\Theta}</em>{nb})\pmb{v}</em>{b&#x2F;n}^b\tag{2.20}<br>$$<br>USV在固定坐标系中的位置轨迹可以通过对公式（2.20）作数值积分求得。<br>$$<br>\pmb{p}<em>{b&#x2F;n}^n(k+1)&#x3D;\pmb{p}</em>{b&#x2F;n}^n(k)+h\pmb{R}<em>b^n(\pmb{\Theta}</em>{nb}(k))\pmb{v}_{b&#x2F;n}^b(k)\tag{2.25}<br>$$<br>其中采样时间h&gt;0，k表示采样次数。</p>
+<p>设$R_{\lambda,\beta}$是对应于围绕$\lambda$轴的旋转$\beta$的旋转矩阵，根据欧拉旋转定理(详解)得：</p>
+<script type="math/tex; mode=display">
+R_{\lambda,\beta}=I_{3\times3}+sin(\beta)S(\lambda)+[1-cos(\beta)]S^2(\lambda)\tag{2.12}</script><p>设$\lambda=[1,0,0]^T$，$\lambda=[0,1,0]^T$和$\lambda=[0,0,1]^T$分别表示x，y和z轴；$\beta=\phi$，$\beta=\theta$，$\beta=\psi$。通过公式（2.12）得到3个主要转换矩阵：</p>
+<script type="math/tex; mode=display">
+R_{x,\phi}=\begin{bmatrix}
+1&0&0\\
+0&c\phi&-s\phi\\
+0&s\phi&c\phi
+\end{bmatrix},
+R_{y,\theta}=\begin{bmatrix}
+c\phi&0&s\phi\\
+0&1&0\\
+-s\phi&0&c\phi
+\end{bmatrix},\\
+R_{z,\psi}=\begin{bmatrix}
+c\phi&-s\phi&0\\
+
+s\phi&c\phi&0\\
+0&0&1
+\end{bmatrix}\tag{2.15}</script><p>上式3个转换矩阵满足$S=-S^T$<em>(Skew-Symmetry of a Matrix)</em>，且满足$SS^T=S^TS=I$。一般的转换顺序规定为x-y-z，总的转换矩阵为：</p>
+<script type="math/tex; mode=display">
+\pmb{R}_b^n(\pmb{\Theta}_{nb}):=\pmb{R}_{z,\psi}\pmb{R}_{y,\theta}\pmb{R}_{x,\phi}\tag{2.16}</script><script type="math/tex; mode=display">
+\pmb{R}_b^n(\pmb{\Theta}_{nb})=\begin{bmatrix}
+c\psi c\theta&-s\psi c\phi+c\psi s\theta s\phi&s\psi s\phi+c\psi c\phi s\theta\\
+s\psi c\theta&c\psi c\phi+s\phi s\theta s\psi&-s\psi s\phi+s\theta s\psi c\phi\\
+-s\theta&c\theta s\phi&c\theta c\phi
+\end{bmatrix}\tag{2.18}</script><p><strong>线速度转换</strong></p>
+<p>设USV在固定坐标系下的状态为$\pmb{p}_{b/n}^n=[x,y,z]^T$，在载体坐标系下的线速度为$\pmb{v}_{b/n}^b=[u,v,w]^T$，则：</p>
+<script type="math/tex; mode=display">
+\dot{\pmb{p}}_{b/n}^n=\pmb{R}_b^n(\pmb{\Theta}_{nb})\pmb{v}_{b/n}^b\tag{2.20}</script><p>USV在固定坐标系中的位置轨迹可以通过对公式（2.20）作数值积分求得。</p>
+<script type="math/tex; mode=display">
+\pmb{p}_{b/n}^n(k+1)=\pmb{p}_{b/n}^n(k)+h\pmb{R}_b^n(\pmb{\Theta}_{nb}(k))\pmb{v}_{b/n}^b(k)\tag{2.25}</script><p>其中采样时间h&gt;0，k表示采样次数。</p>
 <p><strong>角速度转换</strong></p>
-<p>设USV在载体坐标系下的角速度向量为$\pmb{w}<em>{b&#x2F;n}^b&#x3D;[p,q,r]^T$，欧拉角速度为$\dot{\pmb{\Theta}}</em>{nb}&#x3D;[\dot{\phi},\dot{\theta},\dot{\psi}]^T$。二者通过公式（2.26）转换：<br>$$<br>\dot{\pmb{\Theta}}<em>{nb}&#x3D;\pmb{T}<em>\Theta(\pmb{\Theta}</em>{nb})\pmb{w}</em>{b&#x2F;n}^b\tag{2.26}<br>$$<br><em>注意，角速度矢量$\pmb{w}_{b&#x2F;n}^b&#x3D;[p,q,r]^T$不能直接积分t以获得实际的角度。</em> 但是$\dot{\pmb{\Theta}}<em>{nb}&#x3D;[\dot{\phi},\dot{\theta},\dot{\psi}]^T$可以用来生成坐标。根据公式（2.27）可以推导出角速度转换矩阵$\pmb{T}<em>\Theta(\pmb{\Theta}</em>{nb})$。<br>$$<br>\pmb{w}</em>{b&#x2F;n}^b&#x3D;\begin{bmatrix}<br>\dot{\phi}\<br>0\<br>0<br>\end{bmatrix}+\pmb{R}<em>{x,\phi}^{\top}<br>\begin{bmatrix}<br>0\<br>\dot{\theta}\<br>0<br>\end{bmatrix}+\pmb{R}</em>{x,\phi}^{\top}\pmb{R}<em>{y,\theta}^{\top}<br>\begin{bmatrix}<br>0\<br>0\<br>\dot{\psi}<br>\end{bmatrix}:&#x3D;\pmb{T}<em>\Theta^{-1}(\pmb{\Theta}</em>{nb})\dot{\pmb{\Theta}}</em>{nb}\tag{2.27}<br>$$</p>
-<p>$$<br>\pmb{T}<em>\Theta(\pmb{\Theta}</em>{nb})&#x3D;\begin{bmatrix}<br>1&amp;s\phi t\theta&amp;c\phi t\theta\<br>0&amp;c\phi&amp;-s\phi\<br>0&amp;s\phi &#x2F;c\theta&amp;c\phi &#x2F;c\theta<br>\end{bmatrix}\tag{2.28}<br>$$</p>
-<p>注意，上式中$\theta$(Pitch angle)不等于$\pm90^{\circ}$，对于USV这类水面vehicle来讲并不构成一个问题。</p>
+<p>设USV在载体坐标系下的角速度向量为$\pmb{w}_{b/n}^b=[p,q,r]^T$，欧拉角速度为$\dot{\pmb{\Theta}}_{nb}=[\dot{\phi},\dot{\theta},\dot{\psi}]^T$。二者通过公式（2.26）转换：</p>
+<script type="math/tex; mode=display">
+\dot{\pmb{\Theta}}_{nb}=\pmb{T}_\Theta(\pmb{\Theta}_{nb})\pmb{w}_{b/n}^b\tag{2.26}</script><p><em>注意，角速度矢量$\pmb{w}_{b/n}^b=[p,q,r]^T$不能直接积分t以获得实际的角度。</em> 但是$\dot{\pmb{\Theta}}_{nb}=[\dot{\phi},\dot{\theta},\dot{\psi}]^T$可以用来生成坐标。根据公式（2.27）可以推导出角速度转换矩阵$\pmb{T}_\Theta(\pmb{\Theta}_{nb})$。</p>
+<script type="math/tex; mode=display">
+\pmb{w}_{b/n}^b=\begin{bmatrix}
+\dot{\phi}\\
+0\\
+0
+\end{bmatrix}+\pmb{R}_{x,\phi}^{\top}
+\begin{bmatrix}
+0\\
+\dot{\theta}\\
+0
+\end{bmatrix}+\pmb{R}_{x,\phi}^{\top}\pmb{R}_{y,\theta}^{\top}
+\begin{bmatrix}
+0\\
+0\\
+\dot{\psi}
+\end{bmatrix}:=\pmb{T}_\Theta^{-1}(\pmb{\Theta}_{nb})\dot{\pmb{\Theta}}_{nb}\tag{2.27}</script><script type="math/tex; mode=display">
+\pmb{T}_\Theta(\pmb{\Theta}_{nb})=\begin{bmatrix}
+1&s\phi t\theta&c\phi t\theta\\
+0&c\phi&-s\phi\\
+0&s\phi /c\theta&c\phi /c\theta
+\end{bmatrix}\tag{2.28}</script><p>注意，上式中$\theta$(Pitch angle)不等于$\pm90^{\circ}$，对于USV这类水面vehicle来讲并不构成一个问题。</p>
 <p><strong>6DOF运动学方程</strong></p>
-<p>总结以上两个转换，得到6自由度运动学方程：<br>$$<br>\begin{bmatrix}<br>\dot{\pmb{p}}<em>{b&#x2F;n}^n\<br>\dot{\pmb{\Theta}}</em>{nb}<br>\end{bmatrix}&#x3D;\begin{bmatrix}<br>\pmb{R}<em>b^n(\pmb{\Theta}</em>{nb})&amp;\pmb{0}<em>{3\times3}\<br>\pmb{0}</em>{3\times3}&amp;\pmb{T}<em>\Theta(\pmb{\Theta}</em>{nb})<br>\end{bmatrix}\begin{bmatrix}<br>\pmb{v}<em>{b&#x2F;n}^b\<br>\pmb{w}</em>{b&#x2F;n}^b<br>\end{bmatrix}\tag{2.40}<br>$$</p>
-<h3 id="动力学"><a href="#动力学" class="headerlink" title="动力学"></a>动力学</h3><p>在对船舶进行动力学分析之前，先介绍两个载体系中参考点：CO和CG。</p>
+<p>总结以上两个转换，得到6自由度运动学方程：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\dot{\pmb{p}}_{b/n}^n\\
+\dot{\pmb{\Theta}}_{nb}
+\end{bmatrix}=\begin{bmatrix}
+\pmb{R}_b^n(\pmb{\Theta}_{nb})&\pmb{0}_{3\times3}\\
+\pmb{0}_{3\times3}&\pmb{T}_\Theta(\pmb{\Theta}_{nb})
+\end{bmatrix}\begin{bmatrix}
+\pmb{v}_{b/n}^b\\
+\pmb{w}_{b/n}^b
+\end{bmatrix}\tag{2.40}</script><h3 id="动力学"><a href="#动力学" class="headerlink" title="动力学"></a>动力学</h3><p>在对船舶进行动力学分析之前，先介绍两个载体系中参考点：CO和CG。</p>
 <blockquote>
 <p>CO-载体系{b}的原点；CG-质点或重心。</p>
 </blockquote>
 <p>CO一般取在船舶的中线位置上，用于设计船舶控制器和观测器。CG则取决于船舶的负载情况。</p>
-<div align=center><img src="/blog/public/images/基于otter无人艇搭建USV3自由度模型/image-20220407211928516.png" alt="图1" style="zoom: 40%;" /></div>
+<div align=center><img src="/images/基于otter无人艇搭建USV3自由度模型/image-20220407211928516.png" alt="图1" style="zoom: 40%;" /></div>
 
 <p><strong>基于CG的牛顿-欧拉运动方程</strong></p>
-<p>上图中的惯性系{i}中运动可以通过牛顿第二定律来解决，而在载体系中的运动采用欧拉第一第二公理解决 。设线性动量为$\vec{p}_g$和角动量$\vec{h}_g$，将牛顿第二定律通过动量的形式表示：<br>$$<br>\frac{^id}{dt}\vec{p}_g&#x3D;\vec{f}_g\quad \vec{p}<em>g&#x3D;m\vec{v}</em>{g&#x2F;i}\tag{3.3}<br>$$</p>
-<p>$$<br>\frac{^id}{dt}\vec{h}_g&#x3D;\vec{m}_g\quad \vec{h}<em>g&#x3D;I_g\vec{w}</em>{b&#x2F;i}\tag{3.4}<br>$$</p>
-<p>其中$\vec{f}_g$和$\vec{m}<em>g$为作用在CG上的力和力矩，$I_g$是转动惯量，惯性系{i}中的时间微分用${^i}d&#x2F;dt$表示。移动参考系{b}中的向量$\vec{a}$在惯性系{i}中的时间导数为：<br>$$<br>\frac{^id}{dt}\vec{a}&#x3D;\frac{^bd}{dt}\vec{a}+\vec{w}</em>{b&#x2F;i}\times\vec{a}\tag{3.7}<br>$$</p>
-<ul>
+<p>上图中的惯性系{i}中运动可以通过牛顿第二定律来解决，而在载体系中的运动采用欧拉第一第二公理解决 。设线性动量为$\vec{p}_g$和角动量$\vec{h}_g$，将牛顿第二定律通过动量的形式表示：</p>
+<script type="math/tex; mode=display">
+\frac{^id}{dt}\vec{p}_g=\vec{f}_g\quad \vec{p}_g=m\vec{v}_{g/i}\tag{3.3}</script><script type="math/tex; mode=display">
+\frac{^id}{dt}\vec{h}_g=\vec{m}_g\quad \vec{h}_g=I_g\vec{w}_{b/i}\tag{3.4}</script><p>其中$\vec{f}_g$和$\vec{m}_g$为作用在CG上的力和力矩，$I_g$是转动惯量，惯性系{i}中的时间微分用${^i}d/dt$表示。移动参考系{b}中的向量$\vec{a}$在惯性系{i}中的时间导数为：</p>
+<script type="math/tex; mode=display">
+\frac{^id}{dt}\vec{a}=\frac{^bd}{dt}\vec{a}+\vec{w}_{b/i}\times\vec{a}\tag{3.7}</script><ul>
 <li>关于CG的平动</li>
 </ul>
-<p>根据公理（3.3）和公式（3.7）推出矢量作用在{b}参考系下的平动方程为：<br>$$<br>m[\dot{\pmb{v}}<em>{g&#x2F;n}^b+\pmb{S}(\pmb{w}</em>{b&#x2F;n}^b)\pmb{v}_{g&#x2F;n}^b]&#x3D;\pmb{f}_g^b\tag{3.16}<br>$$</p>
-<ul>
+<p>根据公理（3.3）和公式（3.7）推出矢量作用在{b}参考系下的平动方程为：</p>
+<script type="math/tex; mode=display">
+m[\dot{\pmb{v}}_{g/n}^b+\pmb{S}(\pmb{w}_{b/n}^b)\pmb{v}_{g/n}^b]=\pmb{f}_g^b\tag{3.16}</script><ul>
 <li>关于CG的转动</li>
 </ul>
-<p>根据公理（3.4）和公式（3.7）推出矢量作用在{b}参考系下的转动方程，也叫欧拉方程为：<br>$$<br>\pmb{I}<em>g\dot{\pmb{w}}</em>{b&#x2F;n}^b-\pmb{S}(\pmb{I}<em>g\pmb{w}</em>{b&#x2F;n}^b)\pmb{w}_{b&#x2F;n}^b&#x3D;\pmb{m}_g^b\tag{3.18}<br>$$</p>
-<ul>
+<p>根据公理（3.4）和公式（3.7）推出矢量作用在{b}参考系下的转动方程，也叫欧拉方程为：</p>
+<script type="math/tex; mode=display">
+\pmb{I}_g\dot{\pmb{w}}_{b/n}^b-\pmb{S}(\pmb{I}_g\pmb{w}_{b/n}^b)\pmb{w}_{b/n}^b=\pmb{m}_g^b\tag{3.18}</script><ul>
 <li>关于CG的运动方程</li>
 </ul>
-<p>总结上面两个式子得到关于CG的运动方程：<br>$$<br>\pmb{M}<em>{RB}^{CG}\begin{bmatrix}<br>\dot{\pmb{v}}</em>{g&#x2F;n}^b\<br>\dot{\pmb{w}}<em>{b&#x2F;n}^b<br>\end{bmatrix}+<br>\pmb{C}</em>{RB}^{CG}\begin{bmatrix}<br>\pmb{v}<em>{g&#x2F;n}^b\<br>\pmb{w}</em>{b&#x2F;n}^b<br>\end{bmatrix}&#x3D;<br>\begin{bmatrix}<br>\pmb{f}_g^b\<br>\pmb{m}_g^b<br>\end{bmatrix}\tag{3.21}<br>$$<br><strong>基于CO的牛顿-欧拉运动方程</strong></p>
-<p>由于流体动力的作用力和力矩一般是基于CO计算，因此需要求得基于CO的牛顿-欧拉运动方程。根据公式（3.7）以及CO和CG在{n}系中位置关系$\vec{r}<em>{g&#x2F;n}&#x3D;\vec{r}</em>{b&#x2F;n}+\vec{r}<em>g$得：<br>$$<br>\vec{v}</em>{g&#x2F;n}&#x3D;\vec{v}<em>{b&#x2F;n}+(\frac{^bd}{dt}\vec{r}<em>g+\vec{w}</em>{b&#x2F;n}\times\vec{r}<em>g)\tag{3.12}<br>$$<br>由于刚体满足$\frac{^bd}{dt}\vec{r}<em>g&#x3D;\vec{0}$，将公式（3.12）采用参考系{b}表示：<br>$$<br>\pmb{v}</em>{g&#x2F;n}^b&#x3D;\pmb{v}</em>{b&#x2F;n}^b+\pmb{w}</em>{b&#x2F;n}^b\times\pmb{r}<em>g^b\tag{3.22}<br>$$<br>用矩阵形式表示：<br>$$<br>\begin{bmatrix}<br>\pmb{v}</em>{g&#x2F;n}^b\<br>\pmb{w}<em>{b&#x2F;n}^b<br>\end{bmatrix}&#x3D;<br>\pmb{H}(\pmb{r}<em>g^b)<br>\begin{bmatrix}<br>\pmb{v}</em>{b&#x2F;n}^b\<br>\pmb{w}</em>{b&#x2F;n}^b<br>\end{bmatrix}\quad\quad</p>
-<p>\pmb{H}(\pmb{r}<em>g^b):&#x3D;\begin{bmatrix}<br>\pmb{I}</em>{3\times3}&amp;\pmb{S}^{\top}(\pmb{r}<em>g^b)\<br>\pmb{0}</em>{3\times3}&amp;\pmb{I}_{3\times3}<br>\end{bmatrix}<br>\tag{3.23}<br>$$</p>
-<p>最终得到关于CO的运动方程为：<br>$$<br>\pmb{H}^{\top}(\pmb{r}<em>g^b)\pmb{M}</em>{RB}^{CG}\pmb{H}(\pmb{r}<em>g^b)\begin{bmatrix}<br>\dot{\pmb{v}}</em>{b&#x2F;n}^b\<br>\dot{\pmb{w}}<em>{b&#x2F;n}^b<br>\end{bmatrix}+<br>\pmb{H}^{\top}(\pmb{r}<em>g^b)\pmb{C}</em>{RB}^{CG}\pmb{H}(\pmb{r}<em>g^b)\begin{bmatrix}<br>\pmb{v}</em>{b&#x2F;n}^b\<br>\pmb{w}</em>{b&#x2F;n}^b<br>\end{bmatrix}&#x3D;<br>\pmb{H}^{\top}(\pmb{r}_g^b)\begin{bmatrix}<br>\pmb{f}_g^b\<br>\pmb{m}_g^b<br>\end{bmatrix}\tag{3.25}<br>$$</p>
-<ul>
+<p>总结上面两个式子得到关于CG的运动方程：</p>
+<script type="math/tex; mode=display">
+\pmb{M}_{RB}^{CG}\begin{bmatrix}
+\dot{\pmb{v}}_{g/n}^b\\
+\dot{\pmb{w}}_{b/n}^b
+\end{bmatrix}+
+\pmb{C}_{RB}^{CG}\begin{bmatrix}
+\pmb{v}_{g/n}^b\\
+\pmb{w}_{b/n}^b
+\end{bmatrix}=
+\begin{bmatrix}
+\pmb{f}_g^b\\
+\pmb{m}_g^b
+\end{bmatrix}\tag{3.21}</script><p><strong>基于CO的牛顿-欧拉运动方程</strong></p>
+<p>由于流体动力的作用力和力矩一般是基于CO计算，因此需要求得基于CO的牛顿-欧拉运动方程。根据公式（3.7）以及CO和CG在{n}系中位置关系$\vec{r}_{g/n}=\vec{r}_{b/n}+\vec{r}_g$得：</p>
+<script type="math/tex; mode=display">
+\vec{v}_{g/n}=\vec{v}_{b/n}+(\frac{^bd}{dt}\vec{r}_g+\vec{w}_{b/n}\times\vec{r}_g)\tag{3.12}</script><p>由于刚体满足$\frac{^bd}{dt}\vec{r}_g=\vec{0}$，将公式（3.12）采用参考系{b}表示：</p>
+<script type="math/tex; mode=display">
+\pmb{v}_{g/n}^b=\pmb{v}_{b/n}^b+\pmb{w}_{b/n}^b\times\pmb{r}_g^b\tag{3.22}</script><p>用矩阵形式表示：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\pmb{v}_{g/n}^b\\
+\pmb{w}_{b/n}^b
+\end{bmatrix}=
+\pmb{H}(\pmb{r}_g^b)
+\begin{bmatrix}
+\pmb{v}_{b/n}^b\\
+\pmb{w}_{b/n}^b
+\end{bmatrix}\quad\quad
+
+\pmb{H}(\pmb{r}_g^b):=\begin{bmatrix}
+\pmb{I}_{3\times3}&\pmb{S}^{\top}(\pmb{r}_g^b)\\
+\pmb{0}_{3\times3}&\pmb{I}_{3\times3}
+\end{bmatrix}
+\tag{3.23}</script><p>最终得到关于CO的运动方程为：</p>
+<script type="math/tex; mode=display">
+\pmb{H}^{\top}(\pmb{r}_g^b)\pmb{M}_{RB}^{CG}\pmb{H}(\pmb{r}_g^b)\begin{bmatrix}
+\dot{\pmb{v}}_{b/n}^b\\
+\dot{\pmb{w}}_{b/n}^b
+\end{bmatrix}+
+\pmb{H}^{\top}(\pmb{r}_g^b)\pmb{C}_{RB}^{CG}\pmb{H}(\pmb{r}_g^b)\begin{bmatrix}
+\pmb{v}_{b/n}^b\\
+\pmb{w}_{b/n}^b
+\end{bmatrix}=
+\pmb{H}^{\top}(\pmb{r}_g^b)\begin{bmatrix}
+\pmb{f}_g^b\\
+\pmb{m}_g^b
+\end{bmatrix}\tag{3.25}</script><ul>
 <li>关于CO的平动</li>
 </ul>
-<p>将公式（3.25）的上半部分单列出来就是关于CO的平动：<br>$$<br>m[\dot{\pmb{v}}<em>{b&#x2F;n}^b+\pmb{S}^{\top}(\pmb{r}<em>g^b)\dot{\pmb{w}}</em>{b&#x2F;n}^b+\pmb{S}(\pmb{w}</em>{b&#x2F;n}^b)\pmb{v}<em>{b&#x2F;n}^b+\pmb{S}(\pmb{w}</em>{b&#x2F;n}^b)\pmb{S}^{\top}(\pmb{r}<em>g^b)\pmb{w}</em>{b&#x2F;n}^b]&#x3D;\pmb{f}<em>g^b\tag{3.31}<br>$$<br>即：<br>$$<br>m[\dot{\pmb{v}}</em>{b&#x2F;n}^b+\dot{\pmb{w}}<em>{b&#x2F;n}^b\times\pmb{r}<em>g^b+\pmb{w}</em>{b&#x2F;n}^b\times\pmb{v}</em>{b&#x2F;n}^b+\pmb{w}<em>{b&#x2F;n}^b\times(\pmb{w}</em>{b&#x2F;n}^b\times\pmb{r}_g^b)]&#x3D;\pmb{f}_b^b\tag{3.33}<br>$$</p>
-<ul>
+<p>将公式（3.25）的上半部分单列出来就是关于CO的平动：</p>
+<script type="math/tex; mode=display">
+m[\dot{\pmb{v}}_{b/n}^b+\pmb{S}^{\top}(\pmb{r}_g^b)\dot{\pmb{w}}_{b/n}^b+\pmb{S}(\pmb{w}_{b/n}^b)\pmb{v}_{b/n}^b+\pmb{S}(\pmb{w}_{b/n}^b)\pmb{S}^{\top}(\pmb{r}_g^b)\pmb{w}_{b/n}^b]=\pmb{f}_g^b\tag{3.31}</script><p>即：</p>
+<script type="math/tex; mode=display">
+m[\dot{\pmb{v}}_{b/n}^b+\dot{\pmb{w}}_{b/n}^b\times\pmb{r}_g^b+\pmb{w}_{b/n}^b\times\pmb{v}_{b/n}^b+\pmb{w}_{b/n}^b\times(\pmb{w}_{b/n}^b\times\pmb{r}_g^b)]=\pmb{f}_b^b\tag{3.33}</script><ul>
 <li>关于CO的转动</li>
 </ul>
-<p>根据<em>Parallel-Axes Theorem or Huygens–Steiner Theorem</em>和公式（3.25），关于CO的转动：<br>$$<br>\pmb{I}<em>b\dot{\pmb{w}}</em>{b&#x2F;n}^b+\pmb{w}<em>{b&#x2F;n}^b\times\pmb{I}<em>b\pmb{w}</em>{b&#x2F;n}^b+m\pmb{r}<em>g^b\times(\dot{\pmb{v}}</em>{b&#x2F;n}^b+\pmb{w}</em>{b&#x2F;n}^b\times\pmb{v}_{b&#x2F;n}^b)&#x3D;\pmb{m}_b^b\tag{3.40}<br>$$</p>
-<ul>
+<p>根据<em>Parallel-Axes Theorem or Huygens–Steiner Theorem</em>和公式（3.25），关于CO的转动：</p>
+<script type="math/tex; mode=display">
+\pmb{I}_b\dot{\pmb{w}}_{b/n}^b+\pmb{w}_{b/n}^b\times\pmb{I}_b\pmb{w}_{b/n}^b+m\pmb{r}_g^b\times(\dot{\pmb{v}}_{b/n}^b+\pmb{w}_{b/n}^b\times\pmb{v}_{b/n}^b)=\pmb{m}_b^b\tag{3.40}</script><ul>
 <li>非线性6-DOF刚体运动方程</li>
 </ul>
 <p>结合公式（3.33）和（3.40）得到非线性6-DOF刚体运动方程，详见[1]3.31节公式（3.41）。</p>
 <p><strong>USV运动模型</strong></p>
-<p>掌握USV操纵运动有助于解决路径规划问题。在USV操纵性研究中，有必要反应6自由度船舶运动数学模型。在路径规划问题中，USV航行过程中可视为一个刚体在水平面中的3自由度方向上的运动（纵荡、横荡和艏摇），进而忽略垂荡、横摇和纵摇运动<sup>[3]</sup>。将公式（3.41）化简即可得到耦合的USV纵荡、横荡和艏摇运动方程：<br>$$<br>\left{\begin{matrix}<br>m(\dot{u}-vr-x_gr^2)&#x3D;X\<br>m(\dot{v}-ur-x_gr^2)&#x3D;Y\<br>I_z\dot{r}+mx_g(\dot{v}+ur)&#x3D;N<br>\end{matrix}\right.<br>$$<br> 通过向量形式表达：<br>$$<br>\begin{bmatrix}<br>m&amp;0&amp;0\<br>0&amp;m&amp;mx_g\<br>0&amp;mx_g&amp;I_z<br>\end{bmatrix}\begin{bmatrix}<br>\dot{u}\<br>\dot{v}\<br>\dot{r}<br>\end{bmatrix}+\begin{bmatrix}<br>0&amp;0&amp;-m(x_gr+v)\<br>0&amp;0&amp;mu\<br>m(x_gr+v)&amp;-mu&amp;0<br>\end{bmatrix}\begin{bmatrix}<br>u\<br>v\<br>r<br>\end{bmatrix}&#x3D;\pmb{\tau}<br>$$</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>[1]Fossen, Thor. (2011). Handbook of Marine Craft Hydrodynamics and Motion Control. 10.1002&#x2F;9781119994138. </p>
+<p>掌握USV操纵运动有助于解决路径规划问题。在USV操纵性研究中，有必要反应6自由度船舶运动数学模型。在路径规划问题中，USV航行过程中可视为一个刚体在水平面中的3自由度方向上的运动（纵荡、横荡和艏摇），进而忽略垂荡、横摇和纵摇运动<sup>[3]</sup>。将公式（3.41）化简即可得到耦合的USV纵荡、横荡和艏摇运动方程：</p>
+<script type="math/tex; mode=display">
+\left\{\begin{matrix}
+m(\dot{u}-vr-x_gr^2)=X\\
+m(\dot{v}-ur-x_gr^2)=Y\\
+I_z\dot{r}+mx_g(\dot{v}+ur)=N
+\end{matrix}\right.</script><p> 通过向量形式表达：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+m&0&0\\
+0&m&mx_g\\
+0&mx_g&I_z
+\end{bmatrix}\begin{bmatrix}
+\dot{u}\\
+\dot{v}\\
+\dot{r}
+\end{bmatrix}+\begin{bmatrix}
+0&0&-m(x_gr+v)\\
+0&0&mu\\
+m(x_gr+v)&-mu&0
+\end{bmatrix}\begin{bmatrix}
+u\\
+v\\
+r
+\end{bmatrix}=\pmb{\tau}</script><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>[1]Fossen, Thor. (2011). Handbook of Marine Craft Hydrodynamics and Motion Control. 10.1002/9781119994138. </p>
 <p>[2]<a target="_blank" rel="noopener" href="https://www.maritimerobotics.com/otter">https://www.maritimerobotics.com/otter</a></p>
 <p>[3]Ma, Y., Hu, M., &amp; Yan, X. (2018). Multi-objective path planning for unmanned surface vehicle with currents effects. <em>ISA Transactions</em>, <em>75</em>, 137–156. <a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.isatra.2018.02.003">https://doi.org/10.1016/j.isatra.2018.02.003</a> </p>
 
@@ -374,5 +511,23 @@
 
 
     </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
