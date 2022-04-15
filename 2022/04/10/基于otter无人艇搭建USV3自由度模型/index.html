@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="最近参考挪威教授Fossen对海洋运动装备的研究[1]，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，一以此作为我后续研究的对象。 Otter无人艇Otter水面无人艇[2]是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高8">
+    <meta name="description" content="最近参考挪威教授Fossen对海洋运动装备的研究[1]，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，以此作为我后续研究的对象。 Otter无人艇Otter水面无人艇[2]是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高81">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于otter无人艇搭建USV3自由度模型">
 <meta property="og:url" content="http://example.com/2022/04/10/%E5%9F%BA%E4%BA%8Eotter%E6%97%A0%E4%BA%BA%E8%89%87%E6%90%AD%E5%BB%BAUSV3%E8%87%AA%E7%94%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="侧帽君的🛖">
-<meta property="og:description" content="最近参考挪威教授Fossen对海洋运动装备的研究[1]，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，一以此作为我后续研究的对象。 Otter无人艇Otter水面无人艇[2]是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高8">
+<meta property="og:description" content="最近参考挪威教授Fossen对海洋运动装备的研究[1]，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，以此作为我后续研究的对象。 Otter无人艇Otter水面无人艇[2]是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高81">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220410154719504.png">
 <meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220410172159119.png">
 <meta property="og:image" content="http://example.com/images/基于otter无人艇搭建USV3自由度模型/image-20220407211928516.png">
 <meta property="article:published_time" content="2022-04-10T07:07:12.000Z">
-<meta property="article:modified_time" content="2022-04-11T10:37:52.435Z">
+<meta property="article:modified_time" content="2022-04-11T11:42:01.157Z">
 <meta property="article:author" content="Cemaojun">
 <meta property="article:tag" content="模型搭建">
 <meta name="twitter:card" content="summary">
@@ -113,8 +113,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2022/04/15/%E8%B7%AF%E5%BE%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
         
-        <li><a class="icon" href="/2022/04/10/hello-world/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
@@ -180,7 +180,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>最近参考挪威教授Fossen对海洋运动装备的研究<sup>[1]</sup>，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，一以此作为我后续研究的对象。</p>
+    <p>最近参考挪威教授Fossen对海洋运动装备的研究<sup>[1]</sup>，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，以此作为我后续研究的对象。</p>
 <h2 id="Otter无人艇"><a href="#Otter无人艇" class="headerlink" title="Otter无人艇"></a>Otter无人艇</h2><p>Otter水面无人艇<sup>[2]</sup>是一套容易部署的系统，可用于海底测绘和水质监测。Otter的尺寸较小，长200cm，宽108cm，高81.5cm，重量为55kg。船体采用双体设计，配备4块强大且易于更换的电池组，以此具备持久的续航能力。</p>
 <div align=center><img src="/images/基于otter无人艇搭建USV3自由度模型/image-20220410154719504.png" alt="image-20220410172159119" width=60%/></div>
 
@@ -252,14 +252,13 @@ R_{x,\phi}=\begin{bmatrix}
 0&s\phi&c\phi
 \end{bmatrix},
 R_{y,\theta}=\begin{bmatrix}
-c\phi&0&s\phi\\
+c\theta&0&s\theta\\
 0&1&0\\
--s\phi&0&c\phi
+-s\theta&0&c\theta
 \end{bmatrix},\\
 R_{z,\psi}=\begin{bmatrix}
-c\phi&-s\phi&0\\
-
-s\phi&c\phi&0\\
+c\psi&-s\psi&0\\
+s\psi&c\psi&0\\
 0&0&1
 \end{bmatrix}\tag{2.15}</script><p>上式3个转换矩阵满足$S=-S^T$<em>(Skew-Symmetry of a Matrix)</em>，且满足$SS^T=S^TS=I$。一般的转换顺序规定为x-y-z，总的转换矩阵为：</p>
 <script type="math/tex; mode=display">
