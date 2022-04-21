@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>侧帽君的小屋</title>
+  <icon>http://example.com/images/rss.svg</icon>
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2022-04-21T09:27:58.860Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Cemaojun</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>跟踪误差(续)</title>
+    <link href="http://example.com/2022/04/21/%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE-%E7%BB%AD/"/>
+    <id>http://example.com/2022/04/21/%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE-%E7%BB%AD/</id>
+    <published>2022-04-21T09:22:11.000Z</published>
+    <updated>2022-04-21T09:27:58.860Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区:sweat_smile:，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在</summary>
+        
+      
+    
+    
+    
+    
+    <category term="路径跟踪" scheme="http://example.com/tags/%E8%B7%AF%E5%BE%84%E8%B7%9F%E8%B8%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>路径跟踪与跟踪误差</title>
+    <link href="http://example.com/2022/04/15/%E8%B7%AF%E5%BE%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE/"/>
+    <id>http://example.com/2022/04/15/%E8%B7%AF%E5%BE%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE/</id>
+    <published>2022-04-15T05:28:43.000Z</published>
+    <updated>2022-04-15T05:37:20.291Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;解决欠驱动USV轨迹跟踪问题，首先需要建立轨迹跟踪误差模型。在建立轨迹跟踪误差模型之前介绍几个和模型密切相关的角度术语。如图所示，3个角度分别是航线角，航向角和漂移角&lt;sup&gt;[1]&lt;/sup&gt;。由于3个角度在很多学术文章中被混用，经常造成读者的疑惑，而角度之间的关系在推导</summary>
+        
+      
+    
+    
+    
+    
+    <category term="路径跟踪" scheme="http://example.com/tags/%E8%B7%AF%E5%BE%84%E8%B7%9F%E8%B8%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于otter无人艇搭建USV3自由度模型</title>
+    <link href="http://example.com/2022/04/10/%E5%9F%BA%E4%BA%8Eotter%E6%97%A0%E4%BA%BA%E8%89%87%E6%90%AD%E5%BB%BAUSV3%E8%87%AA%E7%94%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://example.com/2022/04/10/%E5%9F%BA%E4%BA%8Eotter%E6%97%A0%E4%BA%BA%E8%89%87%E6%90%AD%E5%BB%BAUSV3%E8%87%AA%E7%94%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B/</id>
+    <published>2022-04-10T07:07:12.000Z</published>
+    <updated>2022-04-11T11:42:01.157Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;最近参考挪威教授Fossen对海洋运动装备的研究&lt;sup&gt;[1]&lt;/sup&gt;，对船舶运动学及刚体动力学有了初步的认识。Fossen团队提供了一系列海洋装备的模型代码，其中不乏USV模型otter。在此基础之上，我将otter模型简化称3自由度模型，以此作为我后续研究的对象。</summary>
+        
+      
+    
+    
+    
+    
+    <category term="模型搭建" scheme="http://example.com/tags/%E6%A8%A1%E5%9E%8B%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+</feed>
