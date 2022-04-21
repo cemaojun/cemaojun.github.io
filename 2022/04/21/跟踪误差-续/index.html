@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区:sweat_smile:，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一">
+    <meta name="description" content="上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区😅，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一下部分文献，公式描述不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跟踪误差(续)">
 <meta property="og:url" content="http://example.com/2022/04/21/%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE-%E7%BB%AD/index.html">
-<meta property="og:site_name" content="侧帽君的小屋">
-<meta property="og:description" content="上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区:sweat_smile:，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一">
+<meta property="og:site_name" content="侧帽君的🏠">
+<meta property="og:description" content="上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区😅，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一下部分文献，公式描述不">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/跟踪误差(续)/image-20220421100505269.png">
 <meta property="og:image" content="http://example.com/images/跟踪误差(续)/image-20220421142209492.png">
 <meta property="article:published_time" content="2022-04-21T09:22:11.000Z">
-<meta property="article:modified_time" content="2022-04-21T09:27:58.860Z">
+<meta property="article:modified_time" content="2022-04-21T09:49:18.915Z">
 <meta property="article:author" content="Cemaojun">
 <meta property="article:tag" content="路径跟踪">
 <meta name="twitter:card" content="summary">
@@ -61,12 +61,12 @@
     
 <script src="/lib/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="侧帽君的小屋" type="application/atom+xml">
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="侧帽君的🏠" type="application/atom+xml">
 </head>
 
 <body>
     <div class="banner">
-<div id="blogtitel" class="blogtitel">侧帽君的小屋</div>
+<div id="blogtitel" class="blogtitel">侧帽君的🏠</div>
 <ul id="wrapper" class="wrapper">
   <div class="sun">
     <div class="star"></div>
@@ -160,7 +160,7 @@
 
     <div class="meta">
       <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">侧帽君的小屋</span>
+        <span itemprop="name">侧帽君的🏠</span>
       </span>
       
     <div class="postdate">
@@ -180,7 +180,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区:sweat_smile:，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一下部分文献，公式描述不够严谨:rage:，还得是大OE(Ocean Engineering):thumbsup:，我将在本文尽可能详细的介绍关于USV方面的路径跟踪误差模型。</p>
+    <p>上一篇文章介绍了船舶路径跟踪方面的一些基础概念，并在文章的末尾简要地介绍了LOS法和路径跟踪误差。在写本文之前，先要纠正自己的一个思维误区😅，就是即将研究的路径跟踪误差模型并不是LOS法特有的，而是一个通用的模型，因此在参考文献中路径跟踪误差的位置在LOS法之前，LOS法只不过是作用于误差模型，尽可能消除误差的一种方法而已。在参考了多篇国内外相关文献后，这里不针对性地批评一下部分文献，公式描述不够严谨😤，还得是大OE(Ocean Engineering)👍，我将在本文尽可能详细的介绍关于USV方面的路径跟踪误差模型。</p>
 <h3 id="角度关系"><a href="#角度关系" class="headerlink" title="角度关系"></a>角度关系</h3><p><img src="/images/跟踪误差(续)/image-20220421100505269.png" alt="image-20220421100505269" style="zoom: 67%;" /></p>
 <p>首先回顾一下有关船舶在水平面(3DOF)运动的角度名词<sup>[1]</sup>：</p>
 <p><strong>定义1：航线角(Course Angle)</strong></p>
@@ -231,7 +231,7 @@ y_e(t)=-(x-x_d(w))\sin(\psi_p(w))+(y-y_d(w))\cos(\psi_p(w))\tag{4}</script><p>�
 \dot{y}_e=U\sin(\psi+\beta-\psi_p)=U\sin(\chi-\psi_p),\quad \beta=\arctan(v,u)\tag{9}</script><p>一般来说，侧滑角（漂移角）$\beta$是非零的，而且随时间变化的。理论上侧滑角是相当小的<sup>[1]</sup>，通常小于5度。因此，可以合理地将侧滑角近似为$\sin\beta\approx\beta$和$\cos\beta\approx 1$得到：</p>
 <script type="math/tex; mode=display">
 \dot{y}_e=U\sin(\psi-\psi_p)+U\beta\cos(\psi-\psi_p)\tag{10}</script><h3 id="前视距离计算"><a href="#前视距离计算" class="headerlink" title="前视距离计算"></a>前视距离计算</h3><p>前视距离决定了USV路径跟踪控制系统的性能。过大的前视距离将导致跟踪速度过慢，而过小的前视距离将增加系统的超调量。前视距离的计算必须同时考虑船的速度和纵向跟踪误差 <strong><em>(the cross tracking error)</em></strong>。当纵向跟踪误差比较大时，应该选择一个小的前视距离，以便迅速接近所需的路径，而不考虑航行速度。随着纵向跟踪误差的减少，有必要根据船舶的航行速度来增加前视距离。当航行速度相对较快时，前视距离需要迅速增加到一个较大值，以减少超调量。这样一来，USV就能顺利地接近所需的路径。另一方面，当航行速度相对较慢时，可以缓慢地增加前视距离，以便USV能够以较短的轨迹接近预期路径。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本篇文章详细推导了路径跟踪误差，并介绍了前视距离计算的规则。下一篇我将具体介绍LOS法则，以及如何通过数学模型来表达前视距离计算规则。:wave:</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本篇文章详细推导了路径跟踪误差，并介绍了前视距离计算的规则。下一篇我将具体介绍LOS法则，以及如何通过数学模型来表达前视距离计算规则。👋</p>
 <h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>[1]Fossen T I. Handbook of marine craft hydrodynamics and motion control[M]. John Wiley &amp; Sons, 2011.</p>
 <p>[2]Zhou W, Wang Y, Ahn C K, et al. Adaptive fuzzy backstepping-based formation control of unmanned surface vehicles with unknown model nonlinearity and actuator saturation[J]. IEEE Transactions on Vehicular Technology, 2020, 69(12): 14749-14764.</p>
 <p>[3]Xiao C, Zhong L I U, Jianqiang Z, et al. Adaptive sliding-mode path following control system of the underactuated USV under the influence of ocean currents[J]. Journal of Systems Engineering and Electronics, 2018, 29(6): 1271-1283.</p>
