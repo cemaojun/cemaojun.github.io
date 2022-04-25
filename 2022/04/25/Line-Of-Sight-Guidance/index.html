@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="昨天发现了一篇由Fossen大佬🙏🙏🙏的学生Morten Breivik🙏撰写的硕士毕业论文，里面无论是基本理论还是公式推导无不透着正统的光环，写的实在是太好了👍。我通过阅读这篇文章理解了Line-Of-Sight Guidance的实际应用方式，并加深了对欠驱动USV相关知识的认知，可谓是受益匪浅🌹。 数学定义稳定化（Stabilization）：稳定化是指将船舶的状态稳定在输出空间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Line-Of-Sight Guidance">
+<meta property="og:url" content="http://example.com/2022/04/25/Line-Of-Sight-Guidance/index.html">
+<meta property="og:site_name" content="侧帽君的🏠">
+<meta property="og:description" content="昨天发现了一篇由Fossen大佬🙏🙏🙏的学生Morten Breivik🙏撰写的硕士毕业论文，里面无论是基本理论还是公式推导无不透着正统的光环，写的实在是太好了👍。我通过阅读这篇文章理解了Line-Of-Sight Guidance的实际应用方式，并加深了对欠驱动USV相关知识的认知，可谓是受益匪浅🌹。 数学定义稳定化（Stabilization）：稳定化是指将船舶的状态稳定在输出空间">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425085720269.png">
+<meta property="og:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425090522471.png">
+<meta property="og:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425092308818.png">
+<meta property="og:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425112421977.png">
+<meta property="og:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425122433607.png">
+<meta property="article:published_time" content="2022-04-25T04:28:01.000Z">
+<meta property="article:modified_time" content="2022-04-25T04:36:12.826Z">
+<meta property="article:author" content="Cemaojun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/Line-Of-Sight%20Guidance/image-20220425085720269.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/mario/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/mario/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/mario/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Line-Of-Sight Guidance</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="侧帽君的🏠" type="application/atom+xml">
+</head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">侧帽君的🏠</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2022/04/21/%E8%B7%9F%E8%B8%AA%E8%AF%AF%E5%B7%AE-%E7%BB%AD/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/04/25/Line-Of-Sight-Guidance/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&text=Line-Of-Sight Guidance"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&is_video=false&description=Line-Of-Sight Guidance"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Line-Of-Sight Guidance&body=Check out this article: http://example.com/2022/04/25/Line-Of-Sight-Guidance/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&name=Line-Of-Sight Guidance&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">数学定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><span class="toc-number">2.</span> <span class="toc-text">数学建模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8%E5%AD%A6-Kinematics"><span class="toc-number">2.1.</span> <span class="toc-text">运动学(Kinematics)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E5%8A%9B%E5%AD%A6-Dynamics"><span class="toc-number">2.2.</span> <span class="toc-text">动力学(Dynamics)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LOS%E5%BC%95%E5%AF%BC"><span class="toc-number">3.</span> <span class="toc-text">LOS引导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97LOS%E8%A7%92"><span class="toc-number">3.1.</span> <span class="toc-text">计算LOS角</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97LOS%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">计算LOS位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%B6%E6%95%9B%E5%88%B0%E7%9B%B4%E7%BA%BF"><span class="toc-number">3.3.</span> <span class="toc-text">收敛到直线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%BF%9E%E7%BB%AD%E7%9A%84LOS%E8%A7%92%E5%BA%A6"><span class="toc-number">3.4.</span> <span class="toc-text">推导出一个连续的LOS角度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Line-Of-Sight Guidance
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">侧帽君的🏠</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-04-25T04:28:01.000Z" itemprop="datePublished">2022-04-25</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>昨天发现了一篇由Fossen大佬🙏🙏🙏的学生Morten Breivik🙏撰写的硕士毕业论文，里面无论是基本理论还是公式推导无不透着正统的光环，写的实在是太好了👍。我通过阅读这篇文章理解了Line-Of-Sight Guidance的实际应用方式，并加深了对欠驱动USV相关知识的认知，可谓是受益匪浅🌹。</p>
+<h3 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h3><p><strong>稳定化（Stabilization）</strong>：稳定化是指将船舶的状态稳定在输出空间的某一点上。</p>
+<p><strong>轨迹跟踪（Trajectory tracking）</strong>：目的是使船舶在输出空间中跟踪一条理想的时间参数化路径。</p>
+<p><strong>路径跟踪（Path following）</strong>：目的是使船舶在输出空间中收敛并遵循期望的路径，而没有任何时间上的要求。</p>
+<blockquote>
+<p>从上面两条定义不难看出两者之间的区别了，轨迹跟踪所要跟踪的是一条时变的轨迹；而路径跟踪只是跟踪一条期望的，规定好的路径。</p>
+</blockquote>
+<p><strong>操纵性（Maneuvering）</strong>：主要目的是使船舶在输出空间中收敛到一个期望的路径，次要目的是使船舶沿路径满足一些动态任务。动态任务考虑到了要控制的船舶的动态行为。</p>
+<h3 id="数学建模"><a href="#数学建模" class="headerlink" title="数学建模"></a>数学建模</h3><h4 id="运动学-Kinematics"><a href="#运动学-Kinematics" class="headerlink" title="运动学(Kinematics)"></a>运动学(Kinematics)</h4><p>运动学方面的内容主要是讲的不同的参考系之间的运动转换关系。它纯粹是涉及到运动的几何<strong><em>（geometrical）</em></strong>方面。关于USV运动学的详细公式表述可以参考<a target="_blank" rel="noopener" href="https://cemaojun.cn/2022/04/10/基于otter无人艇搭建USV3自由度模型/">基于otter无人艇搭建USV3自由度模型</a>。另外补充两点转换矩阵性质：</p>
+<ul>
+<li>$\left | R \right |=1$</li>
+<li>$\dot{R}(\psi)=R(\psi)S(r)$，其中$r=\dot{\psi}$表示艏向角速度，$S(r)$是<strong><em>skew-symmetrical matrix</em></strong>：</li>
+</ul>
+<script type="math/tex; mode=display">
+S(r)=\begin{bmatrix}
+0&-r&0\\
+r&0&0\\
+0&0&0
+\end{bmatrix}</script><h4 id="动力学-Dynamics"><a href="#动力学-Dynamics" class="headerlink" title="动力学(Dynamics)"></a>动力学(Dynamics)</h4><p>详细的公式表述参考<a target="_blank" rel="noopener" href="https://cemaojun.cn/2022/04/10/基于otter无人艇搭建USV3自由度模型/">基于otter无人艇搭建USV3自由度模型</a>，这里对相关概念进行补充说明。首先就是牛顿定理的适用条件必须是在惯性参考系中。因为USV的动力学模型是3-DOF的，模型中不存在恢复力和力矩<strong><em>(restoring forces and moments)</em></strong>，因此可以将模型视为一个质量-阻尼系统<strong><em>(a mass-damper system)</em></strong>。动力学一般公式为：</p>
+<script type="math/tex; mode=display">
+M\dot{\nu}+C(\nu)\nu+D(\nu)\nu=\tau_{thr}+\tau_{env}\tag{3.4}</script><blockquote>
+<p>公式（3.4）是建立在载体坐标系<strong><em>(the BODY frame)</em></strong>基础之上。</p>
+</blockquote>
+<p>对公式（3.4）中的不同术语做出如下解释：</p>
+<ul>
+<li>$M=M_{RB}+M_A$表示系统惯性矩阵，由船舶刚体惯性（RB）和流体动力惯性（A）组成。流体动力附加惯性是船舶动能的重要来源，流体运动之所以会产生动能，是因为船在通过流体时，流体必须移向船的两侧并在船尾收拢。</li>
+<li>$C(\nu)=C(\nu)_{RB}+C(\nu)_A$表示离心力和科里奥利力和力矩矩阵。它可以以多种方式基于$M$进行参数化。<strong>离心力和科里奥利力和力矩矩阵满足$C=-C^{\top}$，这也就证实了这些力和力矩对系统没有任何物理贡献。</strong></li>
+</ul>
+<blockquote>
+<p>注意：$C(\nu)\nu$并不是真正的力和力矩，但确实对船产生实际的作用。这些术语只有船舶执行某种旋转运动运动操作时才起作用，对于直线运动操作没有任何作用。</p>
+</blockquote>
+<ul>
+<li><p>$D(\nu)$表示作用于船舶的流体动力阻尼力和力矩矩阵。$D(\nu)&gt;0$，它们使系统具有耗散性，保证系统状态对于有界输入是有界的。这意味着当所有推进力和环境力以及作用在船上的力矩消失时，船最终会停下来。</p>
+</li>
+<li><p>$\tau_{thr}$表示作用在船舶的推进力和力矩。</p>
+</li>
+<li>$\tau_{env}$表示作用在船舶上的低频环境力，低频(LF)影响会被用于设计控制器，目的是将它们的作用抵消掉。</li>
+</ul>
+<h3 id="LOS引导"><a href="#LOS引导" class="headerlink" title="LOS引导"></a>LOS引导</h3><p>视线（LOS）引导原则体现了对船舶行为和舵手操作的直观理解。引导原则声明如果船舶可以保持其航向与所谓的LOS角$\psi_{los}$一致，就能实现向期望位置的收敛。因此，可以将输出空间从位置和航向的3-DOF减少到航向和surge速度的2-DOF。LOS角的概念可以通过LOS向量和LOS位置来解释。LOS向量是指从船舶的当前位置指向所需几何路径上的一个LOS位置的向量。在NED参考框架中，LOS向量与X轴的角度被定义为LOS角。</p>
+<h4 id="计算LOS角"><a href="#计算LOS角" class="headerlink" title="计算LOS角"></a>计算LOS角</h4><p>将LOS位置记作$\pmb{p}_{los}=[x_{los},y_{los}]^{\top}$，当前船舶位置记为$\pmb{p}=[x,y]^{\top}$，则LOS角为：</p>
+<script type="math/tex; mode=display">
+\psi_{los}=atan2(y_{los}-y,x_{los}-x)\tag{4.1}</script><p>其中atan2函数是四象限反正切函数，满足$\psi_{los}\in\left \langle -\pi,\pi \right \rangle $。</p>
+<h4 id="计算LOS位置"><a href="#计算LOS位置" class="headerlink" title="计算LOS位置"></a>计算LOS位置</h4><p>计算LOS位置有三种可行的方法，目前可参考的文献采用的方法一般都在这三种之列。</p>
+<ol>
+<li>第一种情况是船舶需要跟踪的整条路径由一系列的航点构成。LOS位置简单地被选为航点集合中的当前航点，表示为$p_k$，无需计算，这是最为简单的一种方法。如下图所示：</li>
+</ol>
+<p><img src="/images/Line-Of-Sight Guidance/image-20220425085720269.png" alt="image-20220425085720269" style="zoom:40%;" /></p>
+<ol>
+<li>第二种情况所期望的路径依然由航点集合中的一些列航点组成，但是LOS位置是在连接前一个航点$p_{k-1}$和当前航点$p_k$的直线段上的某处，如下图所示：</li>
+</ol>
+<p><img src="/images/Line-Of-Sight Guidance/image-20220425090522471.png" alt="image-20220425090522471" style="zoom:40%;" /></p>
+<p>假设一个包围船舶当前水平位置$P$的圆，圆的半径等于n倍与船长的距离。这个圆与航点直线段相交于不同的两个点，其中更接近下一个航点的交点被选为LOS位置。这种方法需要动态解决两个有两个未知数的方程：</p>
+<script type="math/tex; mode=display">
+\frac{y_{los}-y_{k-1}}{x_{los}-x_{k-1}}=\frac{y_{k}-y_{k-1}}{x_{k}-x_{k-1}}=\tan(\alpha_{k-1})\tag{4.3}</script><script type="math/tex; mode=display">
+(x_{los}-x)^2+(y_{los}-y)^2=(nL_{pp})^2\tag{4.4}</script><p>公式（4.3）说明两个航点之间的路径斜率是恒定的，公式（4.4）满足勾股定理。</p>
+<ol>
+<li>第三种情况是期望路径是一条弧长参数化的几何路径。前面有讲到，视线（LOS）引导原则可以将输出空间从位置和航向的3-DOF减少到航向和surge速度的2-DOF，而弧长的参数正是角度$\theta$。因此，期望路径被表示为$p _d(\theta)$，如下图所示：</li>
+</ol>
+<p><img src="/images/Line-Of-Sight Guidance/image-20220425092308818.png" alt="image-20220425092308818" style="zoom:40%;" /></p>
+<p>采用通过李雅普诺夫理论得出的动态投影算法（这个在后续的文章中单独讲解），实时计算出使期望路径与船舶当前位置之间距离最小的$\theta$值。由于弧长参数化的原因，可以将路径增量采用$\Delta\theta$的方式表示，得到LOS位置$p_{los}=p_d(\theta+\Delta\theta)$。</p>
+<h4 id="收敛到直线"><a href="#收敛到直线" class="headerlink" title="收敛到直线"></a>收敛到直线</h4><p>船舶的航向角与LOS角趋于一致可以确保船舶的位置与直线趋于一致。</p>
+<p><strong>证明</strong>：设载体坐标系下的船舶线速度和角速度向量为$\nu=[u,v,r]^{\top}$。水平面运动的速度$U=\sqrt{u^2+v^2}$。此外，假设船舶的航向角$\psi$已经收敛至期望的LOS角$\psi_{los}$，并且期望的路径是由直线段连接的航点组成。$U$可以被分解为与当前直线段平行的速度分量$U_T$和与当前直线段垂直的速度分量$U_N$：</p>
+<script type="math/tex; mode=display">
+U_T=u\cos(\alpha_{k-1}-\psi_{los})+v\sin\left (\alpha_{k-1}-\psi_{los}\right)\tag{4.14}</script><script type="math/tex; mode=display">
+U_N=u\sin(\alpha_{k-1}-\psi_{los})+v\cos\left (\alpha_{k-1}-\psi_{los}\right)\tag{4.15}</script><p>随着船的移动，LOS角在不断地朝着直线段方向角变化，也就是$\psi_{los}\to \alpha_{k-1}$。在这过程中sway速度$v$和艏向角速度$r$逐渐消失，$U_T=u\cos(\alpha_{k-1}-\psi_{los})=u,U_N=u\sin(\alpha_{k-1}-\psi_{los})=0$。最终船舶将沿着直线航行，速度为$u$。</p>
+<h4 id="推导出一个连续的LOS角度"><a href="#推导出一个连续的LOS角度" class="headerlink" title="推导出一个连续的LOS角度"></a>推导出一个连续的LOS角度</h4><p>公式（4.1）采用atan2函数求解LOS角，如果一条路径是由航点构成，而LOS角在某个瞬间必须穿过$-\pi/\pi$-交界处，就会观察到不合理的行为，因为atan2函数的映射范围是$\left \langle -\pi,\pi \right \rangle$。一种可行的方案就是将$\left \langle -\pi,\pi \right \rangle$映射到$\left \langle -\infty,\infty \right \rangle$上推导出一个连续的LOS角度。</p>
+<p>一般来说，不可能从一个包含有限信息量的区域，如$\left \langle -\pi,\pi \right \rangle$，到一个包含无限信息量的区域，如$\left \langle -\infty,\infty \right \rangle$，创建一个一对一的、数学分析的映射。所以，为了在两个区域之间建立一个从信息含量低的区域到信息含量高的区域的映射，必须利用状态和记忆变量。此外，还必须说明在无限多的可能映射方案中选择一个的管理规则。                                                         </p>
+<p><img src="/images/Line-Of-Sight Guidance/image-20220425112421977.png" alt="image-20220425112421977" style="zoom:40%;" /></p>
+<p>如图所示，对单位圆的四个象限进行连续的逆时针编号。首先，把记录atan2函数在前一个时间步骤中在单位圆上的位置的变量记为状态。这个变量可以说是atan2函数的状态，代表了相应的圆象限名称。其次，需要一个变量来记住atan2函数在上一个时间步骤中达到的角度值，称为psi_last。将一个时间周期里的所有角度变化量相加得到accumulation，作为输入作用到reference model上。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">sign</span>(delta_y) == <span class="number">1</span> &amp;&amp; <span class="built_in">sign</span>(delta_x) == <span class="number">1</span>)</span><br><span class="line">    <span class="comment">% Now in the 1.quadrant</span></span><br><span class="line">    <span class="keyword">if</span>(state == <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">if</span>((psi_now + <span class="built_in">abs</span>(psi_last)) &lt;= <span class="built_in">pi</span>)</span><br><span class="line">            accumulate = psi_now - psi_last;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            accumulate = psi_last - psi_now + <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="comment">% state == 1, 2 or 4</span></span><br><span class="line">        accumulate = psi_now - psi_last;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    state = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">elseif</span>(<span class="built_in">sign</span>(delta_y) == <span class="number">-1</span> &amp;&amp; <span class="built_in">sign</span>(delta_x) == <span class="number">1</span>)</span><br><span class="line">    <span class="comment">% Now in the 2.quadrant</span></span><br><span class="line">    <span class="keyword">if</span>(state == <span class="number">4</span>)</span><br><span class="line">        <span class="keyword">if</span>((<span class="built_in">abs</span>(psi_now) + psi_last) &lt;= <span class="built_in">pi</span>)</span><br><span class="line">            accumulate = psi_now - psi_last;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            accumulate = psi_now - psi_last + <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="comment">% state == 1, 2 or 3</span></span><br><span class="line">        accumulate = psi_now - psi_last;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    state = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">elseif</span>(<span class="built_in">sign</span>(delta_y) == <span class="number">-1</span> &amp;&amp; <span class="built_in">sign</span>(delta_x) == <span class="number">-1</span>)</span><br><span class="line">    <span class="comment">% Now in the 3.quadrant</span></span><br><span class="line">    <span class="keyword">if</span>(state == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span>((<span class="built_in">abs</span>(psi_now) + psi_last) &lt;= <span class="built_in">pi</span>)</span><br><span class="line">            accumulate = psi_now - psi_last;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            accumulate = psi_now - psi_last + <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">elseif</span>(state == <span class="number">4</span>)</span><br><span class="line">        accumulate = psi_now - psi_last + <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">% state == 2 or 3</span></span><br><span class="line">        accumulate = psi_now - psi_last;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    state = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment">% sign(delta_y)==1 &amp; sign(delta_x)==-1</span></span><br><span class="line">    <span class="comment">% Now in the 4.quadrant</span></span><br><span class="line">    <span class="keyword">if</span>(state == <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">if</span>((psi_now + <span class="built_in">abs</span>(psi_last)) &lt;= <span class="built_in">pi</span>)</span><br><span class="line">            accumulate = psi_now - psi_last;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            accumulate = psi_last - psi_now + <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">elseif</span>(state == <span class="number">3</span>)</span><br><span class="line">        accumulate = psi_now - psi_last - <span class="number">2</span>*<span class="built_in">pi</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">% state == 1 or 4</span></span><br><span class="line">        accumulate = psi_now - psi_last;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    state = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">accumulation = accumulation + accumulate;</span><br><span class="line">psi_last = psi_now;</span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文介绍了LOS引导的实际应用方式，通过这篇的介绍不难看出LOS引导具有动态可行性，不会因为路径的变化而失效。但是，LOS引导还面临着环境扰动影响大的危机。因此，真正的LOS算法是需要考虑环境干扰因素的，就像下图展示的那样。</p>
+<p><img src="/images/Line-Of-Sight Guidance/image-20220425122433607.png" alt="系统]"></p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>Breivik M. Nonlinear maneuvering control of underactuated ships[J]. Norwegian University of Science and Technology, Trondheim, 2003: 10-30.</p>
+
+  </div>
+</article>
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">数学定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><span class="toc-number">2.</span> <span class="toc-text">数学建模</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8%E5%AD%A6-Kinematics"><span class="toc-number">2.1.</span> <span class="toc-text">运动学(Kinematics)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E5%8A%9B%E5%AD%A6-Dynamics"><span class="toc-number">2.2.</span> <span class="toc-text">动力学(Dynamics)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LOS%E5%BC%95%E5%AF%BC"><span class="toc-number">3.</span> <span class="toc-text">LOS引导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97LOS%E8%A7%92"><span class="toc-number">3.1.</span> <span class="toc-text">计算LOS角</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97LOS%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">计算LOS位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%B6%E6%95%9B%E5%88%B0%E7%9B%B4%E7%BA%BF"><span class="toc-number">3.3.</span> <span class="toc-text">收敛到直线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%BF%9E%E7%BB%AD%E7%9A%84LOS%E8%A7%92%E5%BA%A6"><span class="toc-number">3.4.</span> <span class="toc-text">推导出一个连续的LOS角度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/04/25/Line-Of-Sight-Guidance/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&text=Line-Of-Sight Guidance"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&is_video=false&description=Line-Of-Sight Guidance"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Line-Of-Sight Guidance&body=Check out this article: http://example.com/2022/04/25/Line-Of-Sight-Guidance/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&title=Line-Of-Sight Guidance"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/04/25/Line-Of-Sight-Guidance/&name=Line-Of-Sight Guidance&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Cemaojun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+<!-- Disqus Comments -->
+
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
